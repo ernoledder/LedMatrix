@@ -11,10 +11,10 @@ import socket, select
 from time import gmtime, strftime
 from random import randint
 
-image = "Erno smiley.png"
+image = "Erno smiley.png"       #add your image that you want to send
 
-HOST = '131.174.106.195'
-PORT = 5800
+HOST = '131.174.106.195'        #This is the ip that you want to connect with
+PORT = 5800                     #This is the port that is open
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_address = (HOST, PORT)
@@ -40,17 +40,14 @@ try:
     print(answer)
     data = sock.recv(4096)
     answer = data.decode('utf-8')
-    print(answer + "TRALALA")
+    print(answer)
     if answer == 'Received' :
-      
-    
+        
         sock.send(bytes)
-        print("IETS")
     
         # check what server send
         data = sock.recv(4096)
         answer = data.decode('utf-8')
-        print("IETS2")
         print ('answer = %s' % answer)
 
     if answer == 'Received' :
