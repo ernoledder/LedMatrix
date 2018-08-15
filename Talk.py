@@ -6,7 +6,7 @@ from _thread import *
 basename = "image.png"
 textname = "text.txt"
 host = ''
-port = 5800
+port = 5800                         #The port that you want to open
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #Making socket
 
 try:
@@ -14,26 +14,26 @@ try:
 except socket.error as e:
     print(str(e))
 
-s.listen(1)
+s.listen(1)                         #Amount of devices that can connect simultaniously
 
 print('Waiting for a connection')
 
 def threaded_clientTalk(conn):
     conn.send(str.encode("Welcome, please send no more than 64 characters" + '\n' ))
     while True:
-        data = conn.recv(4000)
-        reply = "We got this from you: " + data.decode('utf-8')
+        data = conn.recv(4000)                  #gets data from device
+        reply = "We got this from you: " + data.decode('utf-8')     #The data needs to be decoded when using python3, if you use python 2 than remove the decode part
         if not data:
             break
-        conn.sendall(str.encode(reply))
+        conn.sendall(str.encode(reply))                             #again encode is only for python3
         myFile = open(textname, "w")
         myFile.write((data.decode('utf-8')+"}"))
         myFile.close()
-        conn.close()
+        conn.close()                                        #Stop the connection so someone else can send text
 
 def threaded_clientPicture(conn):
     conn.send(str.encode("Received"))                   
-    data = conn.recv(409600000)
+    data = conn.recv(409600000)                             #get data of the picture
     
     if (len(data)>10):
             
